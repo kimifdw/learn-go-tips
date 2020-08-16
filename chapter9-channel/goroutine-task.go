@@ -5,13 +5,13 @@ import (
 	"sync"
 )
 
-type task struct {
+type Task struct {
 	begin  int
 	end    int
 	result chan<- int
 }
 
-func InitTask(taskchan chan<- task, r chan int, p int) {
+func initTask(taskchan chan<- task, r chan int, p int) {
 	qu := p / 10
 	mod := p % 10
 	high := qu * 10
@@ -36,21 +36,21 @@ func InitTask(taskchan chan<- task, r chan int, p int) {
 	close(taskchan)
 }
 
-func DistributeTask(taskchan <-chan task, wait *sync.WaitGroup, result chan int) {
+func distributeTask(taskchan <-chan task, wait *sync.WaitGroup, result chan int) {
 	for v := range taskchan {
 		wait.Add(1)
-		go ProcessTask(v, wait)
+		go processTask(v, wait)
 	}
 	wait.Wait()
 	close(result)
 }
 
-func ProcessTask(t task, wait *sync.WaitGroup) {
+func processTask(t task, wait *sync.WaitGroup) {
 	t.do()
 	wait.Done()
 }
 
-func ProcessResult(resultchan chan int) int {
+func processResult(resultchan chan int) int {
 	sum := 0
 	for r := range resultchan {
 		sum += r
@@ -58,7 +58,7 @@ func ProcessResult(resultchan chan int) int {
 	return sum
 }
 
-func (t *task) do() {
+func (t *task) Do() {
 	sum := 0
 	for i := t.begin; i <= t.end; i++ {
 		sum += i
@@ -74,11 +74,11 @@ func main() {
 	// 用于同步等待任务的执行
 	wait := &sync.WaitGroup{}
 
-	go InitTask(taskchan, resultchan, 100)
+	go initTask(taskchan, resultchan, 100)
 
-	go DistributeTask(taskchan, wait, resultchan)
+	go distributeTask(taskchan, wait, resultchan)
 
-	sum := ProcessResult(resultchan)
+	sum := processResult(resultchan)
 
 	fmt.Println("sum=", sum)
 }
