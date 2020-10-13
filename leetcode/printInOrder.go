@@ -2,7 +2,10 @@
 // https://zhuanlan.zhihu.com/p/103405131
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func First(streamSync [3]chan interface{}) {
 	fmt.Print("First ")
@@ -60,3 +63,33 @@ func printInOrder(callOrder [3]int) {
 //       fmt.Println()
 //   }
 //}
+
+func main() {
+	var m int32 = 0x12345678
+	var n int8 = int8(m)
+	str := strconv.FormatInt(int64(n), 16)
+	bytes := Hextob(str)
+	h := ByteToH(bytes)
+	fmt.Println(h)
+}
+
+func ByteToH(b []byte) (H string) {
+	H = fmt.Sprintf("%x", b)
+	return
+}
+
+func Hextob(str string) []byte {
+	slen := len(str)
+	bHex := make([]byte, len(str)/2)
+	ii := 0
+	for i := 0; i < len(str); i = i + 2 {
+		if slen != 1 {
+			ss := string(str[i]) + string(str[i+1])
+			bt, _ := strconv.ParseInt(ss, 16, 32)
+			bHex[ii] = byte(bt)
+			ii = ii + 1
+			slen = slen - 2
+		}
+	}
+	return bHex
+}

@@ -10,13 +10,14 @@ go语言学习
 7. chapter7 Structs and Interface 结构体和接口【类似于java的class和Interface】,反射
 8. chapter8 package 主要的包（strings,ioutil,list,sort,os,sort,net）
 9. chapter9 ioutil/http，包含并发相关demo，协程
-10. chapter10
+10. chapter10 interface相关
 11. chapter11 读取文件夹中的文件，并将其文件名写入另一个文件
 12. chapter13 mod管理 
-13. chapter14 
+13. chapter14 多态实现
 14. chapter15 json的使用
-15. chapter16 
+15. chapter16 算法
 16. chapter17 搭建基础框架
+17. chapter18 反射
 
 > 知识点
 1. 提供任何类型的指针，*T；
