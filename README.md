@@ -18,6 +18,7 @@ go语言学习
 15. chapter16 算法
 16. chapter17 搭建基础框架
 17. chapter18 反射
+18. design-pattern 设计模式
 
 > 知识点
 1. 提供任何类型的指针，*T；
