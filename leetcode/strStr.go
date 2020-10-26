@@ -10,42 +10,36 @@ func strStr(haystack string, needle string) int {
 
 	needleLen := len(needle)
 	haystackLen := len(haystack)
-	// 处理其中一个字符串为空气的情况
-	if haystackLen == 0 && needleLen != 0 {
-		return -1
-	}
-
-	// 处理两个字符串都为空的情况
-	if haystackLen == 0 && needleLen == 0 {
-		return 0
-	}
-
-	// 处理两个字符串长度不一致的情况
-	if haystackLen < needleLen {
-		return -1
-	}
 
 	// 处理needle字符串为空的情况
 	if needleLen == 0 {
 		return 0
 	}
 
-	var i, j int
-	for i = 0; i < haystackLen; i++ {
-		for j = 0; j < needleLen; j++ {
-			// 判断数组是否越界的问题
-			z := i + j
-			if z > haystackLen-1 {
-				z = haystackLen - 1
-			}
-			if haystack[z] != needle[j] {
-				break
-			}
-		}
+	// 处理其中一个字符串为空气的情况
+	if haystackLen == 0 || haystackLen < needleLen {
+		return -1
+	}
 
-		if len(needle) == j {
+	var i int
+	for i = 0; i < haystackLen-needleLen+1; i++ {
+		if haystack[i:i+needleLen] == needle {
 			return i
 		}
+		//for j = 0; j < needleLen; j++ {
+		//	// 判断数组是否越界的问题
+		//	z := i + j
+		//	if z > haystackLen-1 {
+		//		z = haystackLen - 1
+		//	}
+		//	if haystack[z] != needle[j] {
+		//		break
+		//	}
+		//}
+		//
+		//if len(needle) == j {
+		//	return i
+		//}
 	}
 	return -1
 
