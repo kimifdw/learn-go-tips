@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 /**
 给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从 0 开始)。如果不存在，则返回 -1。
@@ -45,8 +48,14 @@ func strStr(haystack string, needle string) int {
 
 }
 
+func strStr1(havstack string, needle string) int {
+	return strings.Index(havstack, needle)
+}
+
 func main() {
-	haystack := "mississippi"
-	needle := "issipi"
-	fmt.Println(strStr(haystack, needle))
+	//haystack := "mississippi"
+	//needle := "issipi"
+	haystack := "hello"
+	needle := "ll"
+	fmt.Println(strStr1(haystack, needle))
 }
