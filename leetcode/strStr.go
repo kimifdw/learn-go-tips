@@ -48,6 +48,7 @@ func strStr(haystack string, needle string) int {
 
 }
 
+// strStr1 利用API来处理
 func strStr1(havstack string, needle string) int {
 	return strings.Index(havstack, needle)
 }
