@@ -1,4 +1,4 @@
-package code_review
+package main
 
 import (
 	"crypto/rand"
