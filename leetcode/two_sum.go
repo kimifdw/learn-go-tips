@@ -14,8 +14,8 @@ func twoSum(nums []int, target int) []int {
 	return nil
 }
 
-func main() {
-	sum := twoSum([]int{2, 11, 7, 15}, 9)
-
-	fmt.Printf("result:%d\n", sum)
-}
+//func main() {
+//	sum := twoSum([]int{2, 11, 7, 15}, 9)
+//
+//	fmt.Printf("result:%d\n", sum)
+//}
