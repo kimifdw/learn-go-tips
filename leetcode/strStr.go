@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -9,7 +8,7 @@ import (
 给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从 0 开始)。如果不存在，则返回 -1。
 例如：haystack="hello",needle="ll",结果为2
 */
-func strStr(haystack string, needle string) int {
+func StrStr(haystack string, needle string) int {
 
 	needleLen := len(needle)
 	haystackLen := len(haystack)
@@ -48,15 +47,15 @@ func strStr(haystack string, needle string) int {
 
 }
 
-// strStr1 利用API来处理
-func strStr1(havstack string, needle string) int {
+// StrStr1 利用API来处理
+func StrStr1(havstack string, needle string) int {
 	return strings.Index(havstack, needle)
 }
 
-func main() {
-	//haystack := "mississippi"
-	//needle := "issipi"
-	haystack := "hello"
-	needle := "ll"
-	fmt.Println(strStr1(haystack, needle))
-}
+//func main() {
+//	//haystack := "mississippi"
+//	//needle := "issipi"
+//	haystack := "hello"
+//	needle := "ll"
+//	fmt.Println(strStr1(haystack, needle))
+//}

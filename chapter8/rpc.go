@@ -1,4 +1,4 @@
-package rpcutil
+package main
 
 import (
 	"fmt"
