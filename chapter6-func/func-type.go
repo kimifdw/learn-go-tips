@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func add(a, b int) int {
+func Add(a, b int) int {
 	return a + b
 }
 
@@ -17,7 +17,7 @@ func do(f Op, a, b int) int {
 }
 
 func main() {
-	a := do(add, 1, 2)
+	a := do(Add, 1, 2)
 	fmt.Println(a)
 
 	s := do(sub, 2, 1)
