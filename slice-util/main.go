@@ -11,6 +11,9 @@ func a() []int {
 func b() []int {
 	a1 := []int{3, 4, 5, 6, 7, 8}
 	a2 := a1[2:]
+	a3 := make([]int, len(a1))
+	i := copy(a3, a1)
+	fmt.Println(i)
 	return a2
 }
 

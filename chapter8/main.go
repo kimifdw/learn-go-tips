@@ -13,8 +13,6 @@ import (
 	"strings"
 )
 
-import myRpc "learn-go-tips/chapter8/rpcutil"
-
 type Person struct {
 	Name string
 	Age  int
@@ -160,8 +158,8 @@ func main() {
 	// go ts.Server()
 	// go ts.Client()
 	// 调用RPC
-	go myRpc.ServerRpc()
-	go myRpc.ClientRPC()
+	go ServerRpc()
+	go ClientRPC()
 
 	var input string
 	fmt.Scanln(&input)
