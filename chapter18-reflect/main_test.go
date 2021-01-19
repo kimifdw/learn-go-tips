@@ -1,4 +1,4 @@
-package chapter18
+package chapter18_reflect
 
 import (
 	"reflect"
