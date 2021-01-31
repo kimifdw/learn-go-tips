@@ -1,8 +1,12 @@
 package chapter18_reflect
 
 import (
+	"fmt"
 	"reflect"
+	"runtime"
+	"strings"
 	"testing"
+	"unsafe"
 )
 
 type People struct {
@@ -27,6 +31,16 @@ func NewUseReflect() interface{} {
 	return v.Interface()
 }
 
+func String2ByteSlice(str string) (bs []byte) {
+	strHdr := (*reflect.StringHeader)(unsafe.Pointer(&str))
+	sliceHdr := (*reflect.SliceHeader)(unsafe.Pointer(&bs))
+	sliceHdr.Data = strHdr.Data
+	sliceHdr.Len = strHdr.Len
+	sliceHdr.Cap = strHdr.Len
+	runtime.KeepAlive(&str)
+	return
+}
+
 func BenchmarkNew(b *testing.B) {
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -41,4 +55,14 @@ func BenchmarkNewUseReflect(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		NewUseReflect()
 	}
+}
+
+func TestString2ByteSlice(t *testing.T) {
+	t.Run("String2ByteSlice", func(t *testing.T) {
+		str := strings.Join([]string{"Go", "Land"}, "")
+		s := String2ByteSlice(str)
+		fmt.Printf("%s\n", s)
+		s[5] = 'g'
+		fmt.Println(str)
+	})
 }
