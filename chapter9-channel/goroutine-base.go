@@ -5,7 +5,7 @@ import (
 	"math/rand"
 )
 
-func GenerateIntA(done chan struct{}) chan int {
+func GenerateIntABase(done chan struct{}) chan int {
 	ch := make(chan int, 10)
 
 	go func() {
@@ -34,10 +34,11 @@ func GenerateIntB() chan int {
 }
 
 func GenerateInt() chan int {
+	done := make(chan struct{})
 	ch := make(chan int, 20)
 	go func() {
 		select {
-		case ch <- <-GenerateIntA():
+		case ch <- <-GenerateIntABase(done):
 		case ch <- <-GenerateIntB():
 		}
 	}()
@@ -46,15 +47,11 @@ func GenerateInt() chan int {
 
 func main() {
 	done := make(chan struct{})
-	ch := GenerateIntA(done)
+	ch := GenerateIntABase(done)
 	for i := 0; i < 100; i++ {
 		fmt.Println(<-ch)
 	}
 	fmt.Println(<-ch)
 	fmt.Println(<-ch)
 	close(ch)
-
-	for _, v := range v {
-		fmt.Println(v)
-	}
 }
