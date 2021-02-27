@@ -62,3 +62,5 @@ Temporary Items
 # log
 *.log
 *.o
+./spider-project/ibm_articles
+,/spider-project/ibm_articles_img/*.jpg
