@@ -1,11 +1,9 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 	"path/filepath"
-
-
 )
 
 //
@@ -27,13 +25,13 @@ func generateFileName(path string) {
 			rs := []rune(fileName)
 			nameList = append(nameList, string(rs[0:7]))
 		}
-		return nil;
+		return nil
 	})
 	if err != nil {
 		fmt.Printf("filepath.Walk() returned %v\n", err)
 	}
 	// 文件创建
-	file, err := os.Create("fileName.txt");
+	file, err := os.Create("fileName.txt")
 	if err != nil {
 		fmt.Println("fileName.txt文件")
 		file, err = os.Create("fileName.txt")
@@ -43,10 +41,21 @@ func generateFileName(path string) {
 		}
 	}
 	fmt.Println(len(nameList))
-	for _,v := range nameList {
-		file.WriteString(v+"\r\n")
+	for _, v := range nameList {
+		file.WriteString(v + "\r\n")
 	}
 	defer file.Close()
+
+	// 1. io.closer操作一次不能代表file一定被关闭
+	if err := file.Close(); err != nil {
+		fmt.Printf("文件关闭失败：%v\n", err)
+		return
+	}
+
+	// Sync：等待file写入磁盘
+	err = file.Sync()
+	fmt.Printf("文件同步失败：%v\n", err)
+	return
 
 }
 

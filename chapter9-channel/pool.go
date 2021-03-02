@@ -6,25 +6,29 @@ import (
 	"sync"
 )
 
-func testPut(pool *sync.Pool, deferFunc func()) {
-	defer func() {
-		deferFunc()
-	}()
-	value := "Hello, Emily"
-	pool.Put(value)
-}
-
 func main() {
+	var numCalcsCreated int
+	calcPool := &sync.Pool{New: func() interface{} {
+		numCalcsCreated += 1
+		mem := make([]byte, 1024)
+		return &mem
+	}}
+	// Seed the pool with 4KB
+	calcPool.Put(calcPool.New())
+	calcPool.Put(calcPool.New())
+	calcPool.Put(calcPool.New())
+	calcPool.Put(calcPool.New())
+
+	const numWorkers = 1024 * 1024
 	var wg sync.WaitGroup
-	wg.Add(1)
-	var pool = &sync.Pool{
-		New: func() interface{} {
-			return "Hello world!"
-		},
+	wg.Add(numWorkers)
+	for i := numWorkers; i > 0; i-- {
+		go func() {
+			defer wg.Done()
+			mem := calcPool.Get().(*[]byte)
+			defer calcPool.Put(mem) // Assume something interesting, but quick is being done with this memory.
+		}()
 	}
-	go testPut(pool, wg.Done)
-	// value := "Hello, Emily"
-	// pool.Put(value)
 	wg.Wait()
-	fmt.Println(pool.Get())
+	fmt.Printf("%d calculators were created.", numCalcsCreated)
 }
