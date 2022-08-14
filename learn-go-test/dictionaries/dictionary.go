@@ -14,8 +14,8 @@ func (e DictionaryErr) Error() string {
 	return string(e)
 }
 
-func (dictionary Dictionary) Search(key string) (string, error) {
-	definition, ok := dictionary[key]
+func (d Dictionary) Search(key string) (string, error) {
+	definition, ok := d[key]
 
 	if !ok {
 		return "", ErrNotFound
@@ -24,12 +24,12 @@ func (dictionary Dictionary) Search(key string) (string, error) {
 	return definition, nil
 }
 
-func (dictionary Dictionary) Add(key, value string) error {
+func (d Dictionary) Add(key, value string) error {
 
-	_, err := dictionary.Search(key)
+	_, err := d.Search(key)
 	switch err {
 	case ErrNotFound:
-		dictionary[key] = value
+		d[key] = value
 	case nil:
 		return ErrWordExists
 	default:
